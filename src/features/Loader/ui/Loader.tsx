@@ -1,29 +1,35 @@
 import React, { useState, ChangeEvent } from 'react';
 import { uploadFile } from './axios';
+import styles from './Loader.module.scss';
 
-const FileUpload: React.FC = () => {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  console.log('selectedFiles', selectedFiles);
+const FileUpload: React.FC = (): React.JSX.Element => {
+  const [files, setFiles] = useState<File[]>([]);
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 100) {
-      setSelectedFiles([...Array.from(files).slice(0, 100)]);
+      setFiles([...Array.from(files).slice(0, 100)]);
     } else if (files) {
-      setSelectedFiles([...Array.from(files)]);
+      setFiles([...Array.from(files)]);
     }
   };
 
-  const path = '/folder'; 
+  const path = '/folder';
 
   const handleFileUpload = () => {
-    uploadFile(selectedFiles, path);
+    uploadFile(files, path);
   };
 
-
   return (
-    <div>
-      <input type="file" multiple onChange={handleFileChange} />
-      <button onClick={handleFileUpload}>Загрузить файлы</button>
+    <div className={styles.block}>
+      <label className={styles.inputFile}>
+        <input type="file" multiple onChange={handleFileChange} />
+        <span className={styles.inputFileBtn}>Choose file</span>
+      </label>
+
+      <button onClick={handleFileUpload} className={styles.inputFileBtn}>
+        Upload files
+      </button>
     </div>
   );
 };
