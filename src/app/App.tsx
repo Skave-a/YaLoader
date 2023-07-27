@@ -1,10 +1,11 @@
+import FileUpload from '../features/Loader/ui/Loader';
 import './App.css';
 
 function App() {
 
   return (
     <>
-      <h1>Hello World</h1>
+      <FileUpload />
     </>
   );
 }
